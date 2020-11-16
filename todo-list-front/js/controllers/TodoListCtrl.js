@@ -40,10 +40,12 @@
 
         function alterCheck(todo) {
             todo.done = !todo.done;
-            if (todo.done) {
+            ApplicationService.updateTodo(todo).then(function success(applications) {
                 swal("Atividade Concluída!.", "", "success");
-            }
-            ApplicationService.updateTodo(todo)
+                findApplications
+            }, function error(exception) {
+                swal(exception.data, "", "error");
+            })
         }
 
         function addTodo() {
@@ -57,30 +59,26 @@
         }
 
         function removeTodo(todo) {
-            for (let index = 0, length = vm.todos.length; index < length; index++) {
-                if (vm.todos[index].id == todo.id) {
-                    swal({
-                        title: "Realmente deseja remover esta atividade ?",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                        .then((willDelete) => {
-                            if (willDelete) {
-                                ApplicationService.deleteTodo(todo.id).then(function success(applications) {
-                                    findApplications();
-                                    swal("Atividade removida com sucesso.", {
-                                        icon: "success",
-                                    });
-                                })
-                            } else {
-                                function error(exception) {
-                                    swal(exception.data, "", "error");
-                                }
-                            }
-                        });
-                }
-            }
+            swal({
+                title: "Realmente deseja remover esta atividade ?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        ApplicationService.deleteTodo(todo.id).then(function success(applications) {
+                            findApplications();
+                            swal("Atividade removida com sucesso.", {
+                                icon: "success",
+                            });
+                        })
+                    } else {
+                        function error(exception) {
+                            swal(exception.data, "", "error");
+                        }
+                    }
+                });
         }
 
 
