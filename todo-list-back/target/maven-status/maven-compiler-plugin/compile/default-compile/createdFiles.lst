@@ -1,0 +1,7 @@
+producer/EntityManagerProducer.class
+model/Todo.class
+service/TodoService.class
+repository/TodoRepository.class
+producer/ObjectMapperJacksonProducer.class
+api/TodoResource.class
+producer/ObjectMapperContextResolver.class
