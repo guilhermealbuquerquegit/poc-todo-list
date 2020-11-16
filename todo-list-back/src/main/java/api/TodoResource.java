@@ -25,7 +25,6 @@ import static javax.ws.rs.core.Response.Status.CONFLICT;
 public class TodoResource {
 
     @Resource
-    @PersistenceContext(unitName = "TodoPU")
 
     @Context
     private UriInfo uriInfo;
@@ -34,7 +33,7 @@ public class TodoResource {
     private TodoService service;
 
     @GET
-    public Response findAll () {
+    public Response findAll() {
         return Response.ok(service.findAll()).build();
     }
 
