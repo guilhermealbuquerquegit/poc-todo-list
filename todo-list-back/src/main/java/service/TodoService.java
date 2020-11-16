@@ -18,17 +18,17 @@ public class TodoService {
     }
 
     @Transactional
-    public Todo save (Todo todo) {
+    public Todo save(Todo todo) {
         return repository.save(todo);
     }
 
     @Transactional
-    public Todo update (Todo todo) {
+    public Todo update(Todo todo) {
         return repository.save(todo);
     }
 
     @Transactional
-    public void remove (Long id) {
+    public void remove(Long id) {
         repository.remove(findBy(id));
     }
 

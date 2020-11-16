@@ -17,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 
 import static javax.ws.rs.core.Response.*;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.CONFLICT;
 
 
 @Path("/todos")
@@ -24,10 +25,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class TodoResource {
 
     @Resource
-    private UserTransaction userTransaction;
-
     @PersistenceContext(unitName = "TodoPU")
-    private EntityManager entityManager;
 
     @Context
     private UriInfo uriInfo;
@@ -48,6 +46,9 @@ public class TodoResource {
     @PUT
     @Path("/{id}")
     public Response update(@PathParam("id") @Min(value = 1, message = "O valor do id deve ser no mínimo 1.") Long id, Todo todo) {
+        if (!id.equals(todo.getId())) {
+            return status(CONFLICT).build();
+        }
         service.update(todo);
         return noContent().build();
     }
